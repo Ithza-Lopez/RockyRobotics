@@ -10,7 +10,7 @@ for simple color recognition
 
 import cv2
 
-cap = cv2.VideoCapture(1) #webcam is 0, 1 for camera(if connected)
+cap = cv2.VideoCapture(0) #webcam is 0, 1 for camera(if connected)
 
 #increase resolution of frame
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
@@ -23,9 +23,6 @@ while True:
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) #changing to 
     height,width,_ = frame.shape#gets the center point
    
-    
-    
-    
     center_x = int(width/2) #getting the center point, cv only takes integers
     center_y = int(height/2)
     
@@ -34,9 +31,17 @@ while True:
     
     hue_value = pixel_center[0]#hue value is color value
     saturation_value = pixel_center[1]
+    value_value = pixel_center [2]
     #selecting color ranges
+    
     if saturation_value < 30:
         color = 'WHITE'
+        
+    elif saturation_value <100:
+        color = 'too pale'
+        
+    elif value_value <100:
+        color = 'too dark'
         
     elif hue_value < 7:
         color = 'RED'
@@ -69,7 +74,7 @@ while True:
     b,g,r = int(pixel_center_bgr[0]), int(pixel_center_bgr[1]), int(pixel_center_bgr[2])
     cv2.putText(frame, color, (10,70), 0, 1.5, (b,g,r), 2)#where, what, location, font, size of text, 
     cv2.circle(frame, (center_x,center_y), 5, (25,25,25), 3) #(255,0,0) is blue
-    
+
     
     cv2.imshow("Frame", frame) #shows frame
     key = cv2.waitKey(1)#if zero it freezes the key
