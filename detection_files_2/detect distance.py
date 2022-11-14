@@ -2,8 +2,8 @@ import cv2
 import pyrealsense2
 from realsense_depth import *
 import sys
-from pynput.mouse import Listener
-import logging
+# from pynput.mouse import Listener
+# import logging
 import win32api 
 import time 
 
@@ -67,3 +67,6 @@ while True:
     key = cv2.waitKey(1)
     if key == 27:
         break
+
+dc.release() 
+cv2.destroyAllWindows() #closes all windows
