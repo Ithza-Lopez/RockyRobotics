@@ -12,6 +12,52 @@ point = (400, 300)
 def show_distance(event, x, y, args, params):
     global point
     point = (x, y)
+    
+def ColorDetection(frame, point):
+    #we want to convert frame to hsv for color
+    hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) #changing to 
+    center_x, center_y = point
+    pixel_center = hsv_frame[center_y,center_x] 
+    
+    hue_value = pixel_center[0]#hue value is color value
+    saturation_value = pixel_center[1]
+    value_value = pixel_center [2]
+    #selecting color ranges
+    
+    if saturation_value < 30:
+        color = 'WHITE'
+        
+    elif saturation_value <100:
+        color = 'too pale'
+        
+    elif value_value <100:
+        color = 'too dark'
+        
+    elif hue_value < 7:
+        color = 'RED'
+        
+    elif hue_value < 22:
+        color = 'ORANGE'
+    
+    elif hue_value < 32:
+        color = 'YELLOW'
+        
+    elif hue_value < 90:
+        color = 'GREEN'   
+        
+    elif hue_value < 131:
+        color = 'BLUE' 
+    
+    elif hue_value < 146:
+        color = 'PURPLE' 
+        
+    elif hue_value < 170:
+        color = 'PINK'
+    
+    else:
+        color = 'RED'
+        
+    return color 
 
 # Initialize Camera Intel Realsense
 dc = DepthCamera()
@@ -26,6 +72,7 @@ cv2.setMouseCallback("Color frame", show_distance)
 state_left = win32api.GetKeyState(0x01)  # Left button down = 0 or 1. Button up = -127 or -128 
 state_right = win32api.GetKeyState(0x02)  # Right button down = 0 or 1. Button up = -127 or -128 
 distance_vals = []
+color_vals = []
 boolean_val = False
 # while True:  
 #     b = win32api.GetKeyState(0x02) 
@@ -59,7 +106,11 @@ while True:
         if b < 0: 
             print("this is the registered distance: ", distance)
             distance_vals.append(distance)
+            color = ColorDetection(color_frame,point)
+            color_vals.append(color)
+            print("this is the registered color: ", color)
             print("this is the distance array length: ",len(distance_vals))
+            
         else: 
             continue
     time.sleep(0.001)
@@ -70,3 +121,7 @@ while True:
 
 dc.release() 
 cv2.destroyAllWindows() #closes all windows
+print(distance_vals)
+print(color_vals)
+
+   
