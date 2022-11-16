@@ -61,7 +61,7 @@ def calibration(z_val,L_val):
         y_val = sqrt((L_val**2)-(z_val**2))
         # y_val.append(y)
         x_val = 0
-        xyz = [x_val, y_val, z_val]
+        xyz = [x_val, y_val, 0]
         return xyz,y_val
     
 def xyz_values(z_val,L_val,y_val):
@@ -70,7 +70,7 @@ def xyz_values(z_val,L_val,y_val):
     print('this is l', l_val)
     x_val = sqrt((l_val**2)-(y_val**2))
     print('this is x', x_val)
-    xyz = [x_val, y_val, z_val]
+    xyz = [x_val, y_val, 0]
         # xyz_array.append(temp_xyz)
     # counter_click += 1    
     # print(xyz_array)
