@@ -9,13 +9,14 @@ import time
 from math import sqrt
 from distance_with_colordict import *
 point = (400, 300)
+z_val = 160
+y_val =[]
 
 def show_distance(event, x, y, args, params):
     global point
     point = (x, y)
     
 def ColorDetection(frame, point):
-    #we want to convert frame to hsv for color
     hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) #changing to 
     center_x, center_y = point
     pixel_center = hsv_frame[center_y,center_x] 
@@ -23,42 +24,71 @@ def ColorDetection(frame, point):
     hue_value = pixel_center[0]#hue value is color value
     saturation_value = pixel_center[1]
     value_value = pixel_center [2]
+    
+    pixel_center_bgr = frame[center_y, center_x]
+    b,g,r = int(pixel_center_bgr[0]), int(pixel_center_bgr[1]), int(pixel_center_bgr[2])
+    color_rgb = [round(r/255,3), round(g/255,3), round(b/255,3), 1]
     #selecting color ranges
     
-    if saturation_value < 30:
-        color = 'WHITE'
+    if saturation_value < 30 or saturation_value <100 or value_value <100:
+        color_name = 'uncategorized'
         
-    elif saturation_value <100:
-        color = 'too pale'
-        
-    elif value_value <100:
-        color = 'too dark'
         
     elif hue_value < 7:
-        color = 'RED'
-        
+        color_name = '1 RED'
+        # color_index = '1'
+    
     elif hue_value < 22:
-        color = 'ORANGE'
+        color_name = '2 ORANGE'
     
     elif hue_value < 32:
-        color = 'YELLOW'
+        color_name = '3 YELLOW'
         
     elif hue_value < 90:
-        color = 'GREEN'   
+        color_name = '4 GREEN' 
         
     elif hue_value < 131:
-        color = 'BLUE' 
-    
-    elif hue_value < 146:
-        color = 'PURPLE' 
+        color_name = '5 BLUE' 
+
+    else:
+        color_name = '1 RED'
+
+    return color_name, color_rgb 
+
+
+def xyz_values(z_val,L_val,counter_click):
+    if counter_click == 0:
+        y = sqrt((L_val**2)-(z_val**2))
+        y_val.append(y)
+        x_val = 0
+        xyz = [x_val, y_val, z_val]
         
-    elif hue_value < 170:
-        color = 'PINK'
+    # print('coutner click under 1')
     
     else:
-        color = 'RED'
-        
-    return color 
+        # print('coutner click over 1')
+        y_num = y_val[0])
+        l_val = sqrt((L_val**2)-(z_val**2))
+        print('this is l', l_val)
+        x_val = sqrt((l_val**2)-(y_num**2))
+        print('this is x', x_val)
+        xyz = [x_val, y_val, z_val]
+        # xyz_array.append(temp_xyz)
+    # counter_click += 1    
+    # print(xyz_array)
+    # counter_click =+1
+    return xyz
+# while True:  
+#     b = win32api.GetKeyState(0x02) 
+    
+#     if b != state_right:  # Button state changed 
+#         state_right = b 
+#         print(b) 
+#         if b < 0: 
+#             print('Right Button Pressed') 
+#         else: 
+#             print('Right Button Released') 
+#     time.sleep(0.001)
 
 # Initialize Camera Intel Realsense
 dc = DepthCamera()
@@ -77,32 +107,7 @@ color_vals = []
 boolean_val = False
 global counter_click 
 counter_click = 0
-
-def xyz_values(z_val,L_val):
-    y_val = sqrt((L_val**2)-(z_val**2))
-    temp_xyz = [0,y_val,z_val]
-    xyz_array = []
-    xyz_array.append(temp_xyz)
-    
-    if counter_click>0:
-        l_val = sqrt((L_val**2)-(z_val**2))
-        x_val = sqrt((l_val**2)-(y_val**2))
-        temp_xyz = [x_val,y_val,z_val]
-        xyz_array.append(temp_xyz)
-        
-    print(xyz_array)
-    return xyz_array
-# while True:  
-#     b = win32api.GetKeyState(0x02) 
-    
-#     if b != state_right:  # Button state changed 
-#         state_right = b 
-#         print(b) 
-#         if b < 0: 
-#             print('Right Button Pressed') 
-#         else: 
-#             print('Right Button Released') 
-#     time.sleep(0.001)
+color_dict = {'1 RED':[], '2 ORANGE':[],'3 YELLOW':[], '4 GREEN':[], '5 BLUE':[], 'uncategorized': []}
 
 while True:
     ret, depth_frame, color_frame = dc.get_frame()
@@ -122,13 +127,18 @@ while True:
     if b != state_right:  # Button state changed 
         state_right = b 
         if b < 0: 
-            print("this is the registered distance: ", distance)
-            distance_vals.append(distance)
-            color = ColorDetection(color_frame,point)
-            color_vals.append(color)
-            print("this is the registered color: ", color)
-            print("this is the distance array length: ",len(distance_vals))
-            counter_click+=1
+            # print("this is the registered distance: ", distance)
+            # distance_vals.append(distance)
+            xyz = xyz_values(z_val, distance, counter_click)
+            color_name, color_rgb = ColorDetection(color_frame,point)
+            color_dict[color_name].append([xyz, color_rgb])
+            # print(xyz, '\n')
+            counter_click += 1
+            # print('this is counter click', counter_click)
+            # print("this is the registered color: ", color)
+            print('\n this is the color dict: ', color_dict)
+            # print("this is the distance array length: ",len(distance_vals))
+            
             
             
         else: 
@@ -141,24 +151,3 @@ while True:
 
 dc.release() 
 cv2.destroyAllWindows() #closes all windows
-print(distance_vals)
-print(color_vals)
-# def get_xyz(z_val,L_list):
-#     y_val = sqrt((L_list[0]**2)-(z_val**2))
-#     temp_xyz = [0,y_val,z_val,color_vals[0]]
-#     xyz_array = []
-#     xyz_array.append(temp_xyz)
-    
-#     for i in range (len(L_list)-1):
-#         l_val = sqrt((L_list[i+1]**2)-(z_val**2))
-#         x_val = sqrt((l_val**2)-(y_val**2))
-#         temp_xyz = [x_val,y_val,z_val,color_vals[i+1]]
-#         xyz_array.append(temp_xyz)
-        
-#     print(xyz_array)
-#     return xyz_array
-
-        
-print(color_dict)
-#get_xyz(165,distance_vals)
-#xyz_values(165,)
