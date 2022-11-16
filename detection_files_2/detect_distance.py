@@ -162,4 +162,3 @@ print(color_vals)
 print(color_dict)
 #get_xyz(165,distance_vals)
 #xyz_values(165,)
-   
