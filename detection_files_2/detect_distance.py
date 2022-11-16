@@ -10,7 +10,7 @@ from math import sqrt
 from distance_with_colordict import *
 point = (400, 300)
 z_val = 160
-y_val =[]
+# y_val =[]
 
 def show_distance(event, x, y, args, params):
     global point
@@ -56,23 +56,21 @@ def ColorDetection(frame, point):
     return color_name, color_rgb 
 
 
-def xyz_values(z_val,L_val,counter_click):
+def calibration(z_val,L_val):
     if counter_click == 0:
-        y = sqrt((L_val**2)-(z_val**2))
-        y_val.append(y)
+        y_val = sqrt((L_val**2)-(z_val**2))
+        # y_val.append(y)
         x_val = 0
         xyz = [x_val, y_val, z_val]
-        
-    # print('coutner click under 1')
+        return xyz,y_val
     
-    else:
-        # print('coutner click over 1')
-        y_num = y_val[0])
-        l_val = sqrt((L_val**2)-(z_val**2))
-        print('this is l', l_val)
-        x_val = sqrt((l_val**2)-(y_num**2))
-        print('this is x', x_val)
-        xyz = [x_val, y_val, z_val]
+def xyz_values(z_val,L_val,y_val):
+
+    l_val = sqrt((L_val**2)-(z_val**2))
+    print('this is l', l_val)
+    x_val = sqrt((l_val**2)-(y_val**2))
+    print('this is x', x_val)
+    xyz = [x_val, y_val, z_val]
         # xyz_array.append(temp_xyz)
     # counter_click += 1    
     # print(xyz_array)
@@ -129,7 +127,10 @@ while True:
         if b < 0: 
             # print("this is the registered distance: ", distance)
             # distance_vals.append(distance)
-            xyz = xyz_values(z_val, distance, counter_click)
+            if counter_click == 0:
+                xyz,y_val = calibration(z_val,distance)
+            else:
+                xyz = xyz_values(z_val, distance, y_val)
             color_name, color_rgb = ColorDetection(color_frame,point)
             color_dict[color_name].append([xyz, color_rgb])
             # print(xyz, '\n')
