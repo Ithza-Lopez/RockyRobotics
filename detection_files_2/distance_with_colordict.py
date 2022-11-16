@@ -6,6 +6,7 @@ import sys
 # import logging
 import win32api 
 import time 
+from detect_distance import *
 
 point = (400, 300)
 
@@ -73,7 +74,7 @@ distance_vals = []
 color_vals = []
 boolean_val = False
 
-color_dict = {'1 RED':[], '2 ORANGE':[],'5 BLUE':[], '4 GREEN':[], '5 BLUE':[], 'uncategorized': []}
+color_dict = {'1 RED':[], '2 ORANGE':[],'3 YELLOW':[], '4 GREEN':[], '5 BLUE':[], 'uncategorized': []}
 
 while True:
     ret, depth_frame, color_frame = dc.get_frame()
@@ -93,13 +94,13 @@ while True:
     if b != state_right:  # Button state changed 
         state_right = b 
         if b < 0: 
-            print("this is the registered distance: ", distance)
+            # print("this is the registered distance: ", distance)
             distance_vals.append(distance)
             color_name, color_rgb = ColorDetection(color_frame,point)
-            color_dict[color_name].append(color_rgb)
-            print("this is the registered color: ", color_name)
-            print("this is the distance array length: ",len(distance_vals))
-            print('this is the color dict: ', color_dict)
+            color_dict[color_name].append([xyz_array, color_rgb])
+            # print("this is the registered color: ", color_name)
+            # print("this is the distance array length: ",len(distance_vals))
+            print('\n this is the color dict: ', color_dict)
         else: 
             continue
     time.sleep(0.001)
