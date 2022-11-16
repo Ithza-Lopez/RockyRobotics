@@ -7,7 +7,7 @@ import sys
 import win32api 
 import time 
 from math import sqrt
-
+from distance_with_colordict import *
 point = (400, 300)
 
 def show_distance(event, x, y, args, params):
@@ -75,6 +75,23 @@ state_right = win32api.GetKeyState(0x02)  # Right button down = 0 or 1. Button u
 distance_vals = []
 color_vals = []
 boolean_val = False
+global counter_click 
+counter_click = 0
+
+def xyz_values(z_val,L_val):
+    y_val = sqrt((L_val**2)-(z_val**2))
+    temp_xyz = [0,y_val,z_val]
+    xyz_array = []
+    xyz_array.append(temp_xyz)
+    
+    if counter_click>0:
+        l_val = sqrt((L_val**2)-(z_val**2))
+        x_val = sqrt((l_val**2)-(y_val**2))
+        temp_xyz = [x_val,y_val,z_val]
+        xyz_array.append(temp_xyz)
+        
+    print(xyz_array)
+    return xyz_array
 # while True:  
 #     b = win32api.GetKeyState(0x02) 
     
@@ -111,6 +128,8 @@ while True:
             color_vals.append(color)
             print("this is the registered color: ", color)
             print("this is the distance array length: ",len(distance_vals))
+            counter_click+=1
+            
             
         else: 
             continue
@@ -124,23 +143,23 @@ dc.release()
 cv2.destroyAllWindows() #closes all windows
 print(distance_vals)
 print(color_vals)
-def get_xyz(z_val,L_list):
-    y_val = sqrt((L_list[0]**2)-(z_val**2))
-    temp_xyz = [0,y_val,z_val]
-    xyz_array = []
-    xyz_array.append(temp_xyz)
+# def get_xyz(z_val,L_list):
+#     y_val = sqrt((L_list[0]**2)-(z_val**2))
+#     temp_xyz = [0,y_val,z_val,color_vals[0]]
+#     xyz_array = []
+#     xyz_array.append(temp_xyz)
     
-    for i in range (len(L_list)-1):
-        l_val = sqrt((L_list[i+1]**2)-(z_val**2))
-        x_val = sqrt((l_val**2)-(y_val**2))
-        temp_xyz = [x_val,y_val,z_val]
-        xyz_array.append(temp_xyz)
+#     for i in range (len(L_list)-1):
+#         l_val = sqrt((L_list[i+1]**2)-(z_val**2))
+#         x_val = sqrt((l_val**2)-(y_val**2))
+#         temp_xyz = [x_val,y_val,z_val,color_vals[i+1]]
+#         xyz_array.append(temp_xyz)
         
-    print(xyz_array)
-    return xyz_array
-        
+#     print(xyz_array)
+#     return xyz_array
 
+        
+print(color_dict)
 get_xyz(165,distance_vals)
-
-
+#xyz_values(165,)
    
