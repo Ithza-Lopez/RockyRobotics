@@ -1,7 +1,7 @@
 # RockyRobotics
 
-Introduction 
-#project description
+###Introduction 
+Rocky Robotics' project uses OpenCV, Pyrealsense2, and Pyrobotics to detect the 
 
 Block Distance Detection 
 #code explanation
