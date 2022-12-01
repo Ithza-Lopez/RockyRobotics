@@ -15,6 +15,22 @@ The purpose of the project is to be able to detect different colored blocks and 
 
 Now that we understand the required components and a generalized function of the code. Let's get into more detail on what each component means.
 
+### **Block Distance Detection** 
+The code for block detection uses the following files to detect the distance between each block from where the camera is and uses a mathematical approch to figure out the x,y,z distance that has been inputted in. One important note here is that the z value id harcoded in at a certain value depending on the camera height as we had access to only one camera that could determine 2 axes with good accuracy.
+
+The files used are as follows:
+
+* Color_dictionary_text
+* detect_distance.py
+* distance_with_colordict.py
+* realsense_depth.cpython-38.pyc
+* realsense_depth.py
+* **All of the files are stored in detection_files_2 and can be downloaded directly**
+
+In this folder the main file to run is the detect_distance file which contains the imports and functions needed. 
+
+**NOTE: on the top of this file there is a variable for z_val, change that as needed in mm depending on the camera height**
+
 ### Block Distance Detection 
 #code explanation
 #hardware used
