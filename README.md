@@ -1,7 +1,19 @@
-# RockyRobotics
+# **RockyRobotics - Object Detection and Sorting Simulation**
 
-### Introduction 
-Rocky Robotics' project uses OpenCV, Pyrealsense2, and Pyrobotics to detect the 
+
+## Introduction 
+The purpose of the project is to be able to detect different colored blocks and sort them using a robotic simulation in descending order of color wavelength also known as rainbow format. The code developed in this repository uses a variety of different software and hardware components which are detailed below:
+
+### Hardware required:
+* RGB Camera with Intel Real Sense capabilities
+* USB-C to USB cable to connect camera to computer
+* Colored Blocks to sort 
+* Camera Stand (optional) 
+
+### Software Required:
+* Most of the required software imports have been imported on the top of all the required files. However, make sure to pip install any of the packages such as pybullet, opencv, and pyrealsense2. More documentation of installation can be found online
+
+Now that we understand the required components and a generalized function of the code. Let's get into more detail on what each component means.
 
 ### Block Distance Detection 
 #code explanation
