@@ -1,14 +1,14 @@
 # RockyRobotics
 
-Introduction
+Introduction 
 #project description
 
-Block Distance Detection
+Block Distance Detection 
 #code explanation
 #hardware used
 #hardware set up
 
-Pyrobot code
+Pyrobot code 
 #code explanation
 #Limitations
 
