@@ -1,6 +1,6 @@
 import cv2
 import pyrealsense2
-from realsense_depth import *
+from realsense_depth import * # import file functions from realsense_depth
 import sys
 # from pynput.mouse import Listener
 # import logging
@@ -29,7 +29,8 @@ def ColorDetection(frame, point):
     pixel_center_bgr = frame[center_y, center_x]
     b,g,r = int(pixel_center_bgr[0]), int(pixel_center_bgr[1]), int(pixel_center_bgr[2])
     color_rgb = [round(r/255,3), round(g/255,3), round(b/255,3), 1]
-    #selecting color ranges
+    
+    #if conditions below use the hue_value to determine color
     
     if saturation_value < 30 or saturation_value <100 or value_value <100:
         color_name = 'uncategorized'
@@ -64,10 +65,10 @@ def xyz_values(z_val,L_val,counter_click):
         x_val = 0
         xyz = [x_val, y_val, z_val]
         
-    # print('coutner click under 1')
+    # print('counter click under 1')
     y_val = y_valtemp
     if counter_click > 0:
-        # print('coutner click over 1')
+        # print('counter click over 1')
         # y_val = y_valtemp
         l_val = sqrt((L_val**2)-(z_val**2))
         print('this is l', l_val)
