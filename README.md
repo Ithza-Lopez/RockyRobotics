@@ -39,13 +39,16 @@ Connect the camera to the computer and run the detect_distance file. It should p
 
 
 
-### **Pyrobot code** 
+### **Robot Arm Simulation** 
+There are two different files for the robot arm simulation:
 
+* Robot_Sim
+* Robot_Sim_Grasp_Block
 
-#### Robot Simulation:
+#### Robot_Sim:
 This code simulates a robot that hovers over a block, reaches down for it, touches it, and moves it over to a specified position in rainbow order.
 
-#### Robot Grasp:
+#### Robot_Sim_Grasp_Block:
 This code simulates a robot that hovers over a block, reaches down for it, and grips it in between the grippers. It then sets it back down in its original location.
 
 #### Limitations:
