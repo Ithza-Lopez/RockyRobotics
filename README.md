@@ -38,14 +38,9 @@ Connect the camera to the computer and run the detect_distance file. It should p
 **NOTE: Due to the fluctuations in vision, the mathematical output expects an increasing distance as each block is scanned in order. If the detected distance is less than the previous one, then it does not detect the distances**
 
 
-### Block Distance Detection 
-#code explanation
-#hardware used
-#hardware set up
 
-### Pyrobot code 
-code explanation
-Limitations
+### **Pyrobot code** 
+
 
 #### Robot Simulation:
 This code simulates a robot that hovers over a block, reaches down for it, touches it, and moves it over to a specified position in rainbow order.
@@ -59,5 +54,5 @@ The simulated robot touches down on the blocks, the block disappears and reappea
 Instructions:
 Run Robot_Sim, Robot_Sim_Grasp_Block
 
-### Conclusion
+
 
