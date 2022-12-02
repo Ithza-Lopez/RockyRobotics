@@ -21,7 +21,7 @@ y = .5
 gfinger = .15
 # hard coded color & postion dictionary because we couldn't correctly scale the color_dict from detect_distance
 color_dict = {'1 RED': [[[0.45, y, 0.05], [0.455, 0.169, 0.18, 1]]], '2 ORANGE': [[[0.55, y, 0.05], [0.588, 0.318, 0.2, 1]]], '3 YELLOW': [[[0.15, y, 0.05], [0.541, 0.463, 0.2, 1]]], '4 GREEN': [[[.25, y, 0.05], [0.125, 0.325, 0.216, 1]]], '5 BLUE': [[[0.05, y, 0.05], [0.094, 0.204, 0.325, 1]]]}
-pb.setGravity(0, 0, -9.81)
+pb.setGravity(0, 0, -9.81) #sets the gravity at 9.81 in the -z direction
 numBoxes = 5
 sortingPosition = []
 boxSortedPosition = []
@@ -31,10 +31,10 @@ k = 0
 movetime = 20
 griptime = 10
 
-for i in range(numBoxes):
+for i in range(numBoxes): #creates two lists full of numBoxes number of empty lists
     colorSort.append([])
     sortPos.append([])
-for i in range(numBoxes):
+for i in range(numBoxes): #populates the colorSort and sortPos lists with the correct and corresponding info from color_dict
     if '1 RED' in color_dict:
         colorSort[0] = color_dict['1 RED'][0][1]
         sortPos[0] = color_dict['1 RED'][0][0]
@@ -51,7 +51,7 @@ for i in range(numBoxes):
         colorSort[4] = color_dict['5 BLUE'][0][1]
         sortPos[4] = color_dict['5 BLUE'][0][0]
 
-for i in range(numBoxes):
+for i in range(numBoxes): #populates the lists that hold the positions for the robot arm and the sorted boxes
     endEffectorHeight.append([sortPos[i][0], sortPos[i][1], sortPos[i][2]+.27])
     endEffectorHeightGrab.append([sortPos[i][0], sortPos[i][1], sortPos[i][2]+.23])
     sortingPosition.append([.4+.1*i, 0, 0.3])
@@ -60,28 +60,28 @@ for i in range(numBoxes):
 cubeStartOrientation = pb.getQuaternionFromEuler([0,0,0])
 orn=[0.0, 0.0, 1, 0.0]
 flags = pb.URDF_ENABLE_CACHED_GRAPHICS_SHAPES
-for n in colorSort:
+for n in colorSort: #creates the actual boxes in their correct positions and colors
     boxes.append(pb.loadURDF("cube.urdf", sortPos[k], cubeStartOrientation, globalScaling = .1, flags = flags))
     pb.changeVisualShape(boxes[k], -1, rgbaColor=n)
     k += 1
     
-robot = pb.loadSDF('kuka_iiwa/kuka_with_gripper.sdf')
+robot = pb.loadSDF('kuka_iiwa/kuka_with_gripper.sdf') #creats the robot arm object
 robot = robot[0]
 numJoints = pb.getNumJoints(robot)
 
-for i in range(pb.getNumJoints(robot)): #prints joint index, name, and type
-    jointInfo = pb.getJointInfo(robot, i)
+# for i in range(pb.getNumJoints(robot)): #prints joint index, name, and type
+    # jointInfo = pb.getJointInfo(robot, i)
     # print('Index', jointInfo[0])
     # print('Name', jointInfo[1])
     # print('Type', jointInfo[2])
     # print()
 
-planeID = pb.loadURDF("plane.URDF")
+planeID = pb.loadURDF("plane.URDF") #creates the floor for the robot and block to sit on
 pb.setRealTimeSimulation(0)
 Orientation = pb.getQuaternionFromEuler([np.pi, 0., 0.])
                                            
-time.sleep(10)
-pb.setJointMotorControlMultiDof(robot, 7, pb.POSITION_CONTROL)
+time.sleep(4)
+pb.setJointMotorControlMultiDof(robot, 7, pb.POSITION_CONTROL) #these 3 lines set the the robot to a predetermed "start" position
 targetPositionsJoints = pb.calculateInverseKinematics(robot, numJoints - 7, [0, 0, 3], targetOrientation = Orientation)
 pb.setJointMotorControlArray(robot, range(numJoints-7), pb.POSITION_CONTROL, targetPositions = jointPositions)
 for _ in range(movetime): #move to "rest" position

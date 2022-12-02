@@ -38,33 +38,33 @@ griptime = 20
 
 sortPos = [0.6, y, 0.05]
 
-endEffectorHeight.append([sortPos[0], sortPos[1], sortPos[2]+.3])
-endEffectorHeightGrab.append([sortPos[0], sortPos[1], sortPos[2]+0.15])
+endEffectorHeight.append([sortPos[0], sortPos[1], sortPos[2]+.3]) #sets the position of the end effector to hover over the block
+endEffectorHeightGrab.append([sortPos[0], sortPos[1], sortPos[2]+0.15]) #sets the position of the gripper around the block
 
 cubeStartOrientation = pb.getQuaternionFromEuler([0,0,0])
 orn=[0.0, 0.0, 1, 0.0]
 flags = pb.URDF_ENABLE_CACHED_GRAPHICS_SHAPES
 
-boxes.append(pb.loadURDF("cube.urdf", sortPos, cubeStartOrientation, globalScaling = .1, flags = flags))
-pb.changeVisualShape(boxes[k], -1, rgbaColor=[0, 0, 0, 1])
+boxes.append(pb.loadURDF("cube.urdf", sortPos, cubeStartOrientation, globalScaling = .1, flags = flags)) #creates a cube object at the sortPos position
+pb.changeVisualShape(boxes[k], -1, rgbaColor=[0, 0, 0, 1]) #colors the block black (rgba value)
     
-robot = pb.loadSDF('kuka_iiwa/kuka_with_gripper.sdf')
+robot = pb.loadSDF('kuka_iiwa/kuka_with_gripper.sdf') #creates the robot object
 robot = robot[0]
 numJoints = pb.getNumJoints(robot)
 
-for i in range(pb.getNumJoints(robot)): #prints joint index, name, and type
-    jointInfo = pb.getJointInfo(robot, i)
+# for i in range(pb.getNumJoints(robot)): #prints joint index, name, and type
+#     jointInfo = pb.getJointInfo(robot, i)
     # print('Index', jointInfo[0])
     # print('Name', jointInfo[1])
     # print('Type', jointInfo[2])
     # print()
 
-planeID = pb.loadURDF("plane.URDF")
+planeID = pb.loadURDF("plane.URDF") #creates the plane for the robot and block to be on
 pb.setRealTimeSimulation(0)
 Orientation = pb.getQuaternionFromEuler([np.pi, 0., 0.])
                                            
-time.sleep(2)
-pb.setJointMotorControlMultiDof(robot, 7, pb.POSITION_CONTROL)
+time.sleep(4) #gives the viewer time to adjust the window view
+pb.setJointMotorControlMultiDof(robot, 7, pb.POSITION_CONTROL) #these 3 lines set the the robot to a predetermed "start" position
 targetPositionsJoints = pb.calculateInverseKinematics(robot, numJoints - 7, [0, 0, 3], targetOrientation = Orientation)
 pb.setJointMotorControlArray(robot, range(numJoints-7), pb.POSITION_CONTROL, targetPositions = jointPositions)
 for _ in range(movetime): #move to "rest" position
