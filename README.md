@@ -31,6 +31,13 @@ In this folder the main file to run is the detect_distance file which contains t
 
 **NOTE: on the top of this file there is a variable for z_val, change that as needed in mm depending on the camera height**
 
+**Additional Note: Place the camera on the first block and make sure all blocks are within the frame**
+
+Connect the camera to the computer and run the detect_distance file. It should pull up the camera with a black dot and varying distances. 
+
+**NOTE: Due to the fluctuations in vision, the mathematical output expects an increasing distance as each block is scanned in order. If the detected distance is less than the previous one, then it does not detect the distances**
+
+
 ### Block Distance Detection 
 #code explanation
 #hardware used
