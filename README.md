@@ -15,7 +15,7 @@ The purpose of the project is to be able to detect different colored blocks and 
 
 Now that we understand the required components and a generalized function of the code. Let's get into more detail on what each component means.
 
-### **Block Distance Detection** 
+## **Block Distance Detection** 
 The code for block detection uses the following files to detect the distance between each block from where the camera is and uses a mathematical approch to figure out the x,y,z distance that has been inputted in. One important note here is that the z value id harcoded in at a certain value depending on the camera height as we had access to only one camera that could determine 2 axes with good accuracy.
 
 The files used are as follows:
@@ -39,7 +39,7 @@ Connect the camera to the computer and run the detect_distance file. It should p
 
 
 
-### **Robot Arm Simulation** 
+## **Robot Arm Simulation** 
 There are two different files for the robot arm simulation:
 
 * Robot_Sim
