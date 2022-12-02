@@ -9,7 +9,7 @@ import time
 from math import sqrt
 from distance_with_colordict import *
 point = (400, 300)
-z_val = 160
+z_val = 160 # change as needed depending on height of the camera
 y_val =[]
 global y_valtemp
 
@@ -58,14 +58,14 @@ def ColorDetection(frame, point):
     return color_name, color_rgb 
 
 
-def xyz_values(z_val,L_val,counter_click):
+def xyz_values(z_val,L_val,counter_click): # calculate the y-value when no counter has been made since y value is always constant
     if counter_click == 0:
         y_val = sqrt((L_val**2)-(z_val**2))
         y_valtemp = y_val
         x_val = 0
         xyz = [x_val, y_val, z_val]
         
-    # print('counter click under 1')
+    # print('counter click under 1') # calculates the l value that translates from 3-d to 2-d plane
     y_val = y_valtemp
     if counter_click > 0:
         # print('counter click over 1')
