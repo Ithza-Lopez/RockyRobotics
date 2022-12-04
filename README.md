@@ -30,11 +30,16 @@ The files used are as follows:
 In this folder the main file to run is the `detect_distance.py` file which contains the imports and functions needed. 
 
 Instructions:
+
 **1. Place the camera so all blocks are within the frame. Camera view must be parallel to ground, do not point camera down. First block must be directly infront of camera**
+
 **2. On the top of the `detect_distance.py` file there is a variable for z_val, change that as needed in mm depending on the camera height from the floor**
-* 3. Connect the camera to the computer and run the detect_distance file. It should pull up the camera with a black dot and varying distances. 
-* 4. Click on each block from left to right. 
-* 5. Press esc key when done
+
+ 3. Connect the camera to the computer and run the detect_distance file. It should pull up the camera with a black dot and varying distances. 
+ 
+ 4. Click on each block from left to right. 
+ 
+ 5. Press esc key when done
 
 **NOTE: Due to the fluctuations in vision, the mathematical output expects an increasing distance as each block is scanned in order. If the detected distance is less than the previous one, then it does not detect the distances. Before a block is clicked, wait for the distance detection to stabilize**
 
